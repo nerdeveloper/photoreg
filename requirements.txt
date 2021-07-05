@@ -1,0 +1,4 @@
+setuptools~=57.0.0
+requests~=2.25.1
+click~=8.0.1
+python-dotenv~=0.18.0
