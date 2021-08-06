@@ -14,7 +14,7 @@ headers = {
 }
 
 params = {
-    'visualFeatures': 'Categories,Description,Color',
+    'visualFeatures': 'Categories,Description,Color,adult',
     'language': 'en',
 }
 
@@ -44,6 +44,8 @@ def run(analyze):
         }
         response = requests.post(endpoint, headers=headers, params=params, json=body)
         response.raise_for_status()
+        
+        
         descriptions = response.json()["description"]["captions"]
         for description in descriptions:
             output = description['text']
@@ -56,6 +58,12 @@ def run(analyze):
         describe = response.json()["description"]["tags"]
         output_describe = str(describe)[1:-1]
         click.echo("Content in the picture: %s" % output_describe)
+
+        adult = response.json()["adult"]["isAdultContent"]
+        click.echo("Is adult content: %s" % adult)
+
+        isGory = response.json()["adult"]["isGoryContent"]
+        click.echo("Is gory content: %s" % isGory)
 
     except Exception as ex:
         raise ex
